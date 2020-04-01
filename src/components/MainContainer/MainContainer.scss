@@ -1,0 +1,27 @@
+.hotel {
+  width: 300px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: white;
+  margin-right: 15px;
+  margin-bottom: 15px;
+
+  img {
+    width: 100%;
+  }
+
+  &__info {
+    padding: 20px 15px 30px 15px;
+
+    .hotel-name {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+.main-container {
+  background-color: #dedede;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 20px;
+}
