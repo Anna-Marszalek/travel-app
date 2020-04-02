@@ -33,7 +33,7 @@ const sidebar_data = [
     type: 'plus',
     price: 560,
     location: 'Bali'
-  }
-];
+  },
+]
 
 export default sidebar_data;

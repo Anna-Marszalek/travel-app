@@ -1,0 +1,51 @@
+.sidebar {
+  width: 22%;
+  min-height: 50vh;
+  position: absolute;
+
+  top: 117px;
+}
+
+.card-img-top {
+  width: 80%;
+  border-radius: 10px;
+}
+
+.card-body {
+  width: 40%;
+}
+
+h1 {
+  font-size: medium;
+  text-align: center;
+  font-weight: bold;
+}
+
+.card {
+  background-color: #dedede;
+  border: none;
+  border-radius: 20px;
+}
+
+.card-title {
+  font-size: small;
+  font-weight: 800;
+}
+
+.card-text {
+  font-size: small;
+}
+
+.sidebar-left {
+  width: 50%;
+  margin: 10px;
+}
+
+.sidebar-middle {
+  float: left;
+  width: 30%;
+}
+
+.sidebar-right {
+  clear: both;
+}

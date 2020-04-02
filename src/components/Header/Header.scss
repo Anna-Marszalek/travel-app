@@ -1,16 +1,14 @@
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  margin-left: 200px;
 
-
-.header { 
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-
-    .search-field {
-        font-size: 2rem;
-        font-weight: bold;
-        border: none;
-        outline: none;
-    }
+  .search-field {
+    font-size: 2rem;
+    font-weight: bold;
+    border: none;
+    outline: none;
+  }
 }
-

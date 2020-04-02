@@ -1,12 +1,13 @@
-import React from 'react';
-import './App.scss';
-import MainContainer from './components/MainContainer/MainContainer';
-import Header from './components/Header/Header';
-import data from './utils/data';
-import Sidebar from './components/Sidebar/Sidebar';
-import sidebar_data from './utils/sidebar_data';
+import React from "react";
+import "./App.scss";
+import MainContainer from "./components/MainContainer/MainContainer";
+import Header from "./components/Header/Header";
+import data from "./utils/data";
+import Sidebar from "./components/Sidebar/Sidebar";
+import sidebar_data from "./utils/sidebar_data";
 class App extends React.Component {
   state = {
+    sidebar_hotels: [],
     hotels: []
   };
 
@@ -22,7 +23,8 @@ class App extends React.Component {
 
   componentDidMount() {
     this.setState({
-      hotels: data
+      hotels: data,
+      sidebar_hotels: sidebar_data
     });
   }
 
@@ -31,7 +33,7 @@ class App extends React.Component {
       <div className="App">
         <Header filterHotels={this.filterHotels} />
         <MainContainer data={this.state.hotels} />
-        <Sidebar data={this.state.hotels}/>
+        <Sidebar sidebar_data={this.state.sidebar_hotels} />
       </div>
     );
   }
