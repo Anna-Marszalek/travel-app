@@ -1,14 +1,22 @@
 .header {
   width: 100%;
-  display: flex;
+ text-align: center;
   justify-content: center;
   padding: 20px;
-  margin-left: 200px;
 
   .search-field {
     font-size: 2rem;
     font-weight: bold;
     border: none;
     outline: none;
+    text-align: center;
   }
+}
+
+.filters-field {
+  margin: auto;
+  border: 1px solid grey;
+  width: 20%;
+  border-radius: 30px;
+  
 }

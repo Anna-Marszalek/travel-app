@@ -1,14 +1,13 @@
-import React from "react";
-import "./App.scss";
-import MainContainer from "./components/MainContainer/MainContainer";
-import Header from "./components/Header/Header";
-import data from "./utils/data";
-import Sidebar from "./components/Sidebar/Sidebar";
-import sidebar_data from "./utils/sidebar_data";
+import React from 'react';
+import './App.scss';
+import MainContainer from './components/MainContainer/MainContainer';
+import Header from './components/Header/Header';
+import data from './utils/data';
+
 class App extends React.Component {
   state = {
-    sidebar_hotels: [],
-    hotels: []
+    hotels: [],
+    sort: true
   };
 
   filterHotels = name => {
@@ -21,19 +20,56 @@ class App extends React.Component {
     });
   };
 
-  componentDidMount() {
-    this.setState({
-      hotels: data,
-      sidebar_hotels: sidebar_data
+  filterHotelsPrice = price => {
+    const filteredHotels = data.state.hotels.filter(hotel =>{
+      return hotel.price >= parseInt(price);
     });
+
+    this.setState({
+      hotels: parseInt(price) > 0 ? filteredHotels : data
+    });
+  };
+
+  sortHotels = () => {
+    let aMoreB;
+    let bMoreA;
+
+    console.log('App -> sortHotels -> this.state.sort', this.state.sort)
+    if (this.state.sort) {
+      aMoreB = 1;
+      bMoreA = -1;
+    } else {
+      aMoreB = -1;
+      bMoreA = 1;
+    }
+
+    return data.sort((a, b) => {
+      if (a.title > b.title) {
+        return aMoreB;
+      } else if (b.title > a.title) {
+        return bMoreA;
+      } else {
+        return 0;
+      }
+    })
+  }
+
+  switchSort = () => {
+    this.setState({
+      sort: !this.state.sort,
+      hotels: this.sortHotels()
+    })
+  }
+
+  componentDidMount() {
+    this.switchSort();
   }
 
   render() {
     return (
       <div className="App">
-        <Header filterHotels={this.filterHotels} />
-        <MainContainer data={this.state.hotels} />
-        <Sidebar sidebar_data={this.state.sidebar_hotels} />
+        <Header filterHotels={this.filterHotels} filterHotelsPrice={this.filterHotelsPrice}/>
+        <MainContainer data={this.state.hotels} switchSort={this.switchSort} sort={this.state.sort} />
       </div>
     );
   }
