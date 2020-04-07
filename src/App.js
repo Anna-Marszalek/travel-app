@@ -21,7 +21,7 @@ class App extends React.Component {
   };
 
   filterHotelsPrice = price => {
-    const filteredHotels = data.state.hotels.filter(hotel =>{
+    const filteredHotels = data.filter(hotel =>{
       return hotel.price >= parseInt(price);
     });
 
