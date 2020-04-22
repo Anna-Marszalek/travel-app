@@ -1,6 +1,8 @@
 import React from 'react';
 import sidebarData from '../../utils/sidebar_data';
 import './Sidebar.scss';
+import AddHotel from '../AddHotel/AddHotel';
+
 
 class Sidebar extends React.Component {
   render() {
@@ -9,9 +11,9 @@ class Sidebar extends React.Component {
         <div className="sidebar-block sidebar-hotels">
           <h2>More than just hotels</h2>
           <div className="s-list">
-            {sidebarData.map(hotel => {
+            {sidebarData.map((hotel, index) => {
               return (
-                <div className="s-hotel">
+                <div className="s-hotel" key = {index}>
                   <div
                     className="s-photo"
                     style={{ backgroundImage: `url(${hotel.image})` }}
@@ -29,6 +31,8 @@ class Sidebar extends React.Component {
               );
             })}
           </div>
+
+        <AddHotel/>  
         </div>
       </div>
     );
