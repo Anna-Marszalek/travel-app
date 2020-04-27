@@ -1,20 +1,20 @@
-import React from 'react';
-import MainContainer from '../../components/MainContainer/MainContainer';
-import Header from '../../components/Header/Header';
-import axios from 'axios';
-import rates from '../../utils/rates';
-
+import React from "react";
+import MainContainer from "../../components/MainContainer/MainContainer";
+import Header from "../../components/Header/Header";
+import axios from "axios";
+import rates from "../../utils/rates";
 
 class HomeView extends React.Component {
   state = {
     hotels: [],
     sort: true,
     dataFromApi: null,
-    currency: 'USD'
+    currency: "USD",
+    currencyIcon: "$",
   };
 
-  filterHotels = name => {
-    const filteredHotels = this.state.hotels.filter(hotel => {
+  filterHotels = (name) => {
+    const filteredHotels = this.state.hotels.filter((hotel) => {
       return hotel.location.toLowerCase().includes(name.toLowerCase());
     });
 
@@ -23,8 +23,8 @@ class HomeView extends React.Component {
     });
   };
 
-  filterHotelsPrice = price => {
-    const filteredHotels = this.state.dataFromApi.filter(hotel =>{
+  filterHotelsPrice = (price) => {
+    const filteredHotels = this.state.dataFromApi.filter((hotel) => {
       return hotel.price >= parseInt(price);
     });
 
@@ -37,7 +37,7 @@ class HomeView extends React.Component {
     let aMoreB;
     let bMoreA;
 
-    console.log('App -> sortHotels -> this.state.sort', this.state.sort)
+    console.log("App -> sortHotels -> this.state.sort", this.state.sort);
     if (this.state.sort) {
       aMoreB = 1;
       bMoreA = -1;
@@ -54,53 +54,63 @@ class HomeView extends React.Component {
       } else {
         return 0;
       }
-    })
-  }
+    });
+  };
 
   switchSort = () => {
     this.setState({
       sort: !this.state.sort,
-      hotels: this.sortHotels()
-    })
-  }
+      hotels: this.sortHotels(),
+    });
+  };
 
-  // convertPrice = (value) => {
-  // this.setState({
-  //   value: this.state.currency.value,
-  // });
-  // }
+  convertPrice = (e) => {
+    this.setState({
+      currency: e.target.value,
+    });
+  };
 
-  componentDidUpdate(prevProps, prevState){
- if (prevState.currency !== this.state.currency) {
-   const dataCopy = JSON.parse(JSON.stringify(rates));
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currency !== this.state.currency) {
+      const dataCopy = JSON.parse(JSON.stringify(this.state.dataFromApi));
 
-   const hotelsNew = dataCopy.map((hotel) => {
-     hotel.price = Math.ceil(hotel.price * rates[this.state.currency]);
-     return hotel;
-   });
+      const hotelsNew = dataCopy.map((hotel) => {
+        hotel.price = Math.ceil(hotel.price * rates[this.state.currency]);
+        return hotel;
+      });
 
-   this.setState({
-     hotels: hotelsNew,
-   })
- }
+      this.setState({
+        hotels: hotelsNew,
+      });
+    }
   }
 
   componentDidMount() {
-    axios.get('https://nodejs-mysql-it-academy.herokuapp.com/hotels').then((res) => { 
-    this.setState({
-      dataFromApi: res.data
-    })
-    this.switchSort();
-    })
-
-    
+    axios
+      .get("https://nodejs-mysql-it-academy.herokuapp.com/hotels")
+      .then((res) => {
+        this.setState({
+          dataFromApi: res.data,
+        });
+        this.switchSort();
+      });
   }
 
   render() {
     return (
-      <div >
-        <Header filterHotels={this.filterHotels} filterHotelsPrice={this.filterHotelsPrice}/>
-        <MainContainer data={this.state.hotels} switchSort={this.switchSort} sort={this.state.sort} convertPrice={this.convertPrice} value={this.state.value}/>
+      <div>
+        <Header
+          filterHotels={this.filterHotels}
+          filterHotelsPrice={this.filterHotelsPrice}
+        />
+        <MainContainer
+          data={this.state.hotels}
+          switchSort={this.switchSort}
+          sort={this.state.sort}
+          convertPrice={this.convertPrice}
+          currency={this.state.currency}
+          currencyIcon={this.setCurrencyIcon}
+        />
       </div>
     );
   }
