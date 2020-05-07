@@ -1,18 +1,16 @@
-import React from 'react';
-import './Sidebar.scss';
-import AddHotel from '../AddHotel/AddHotel';
-import axios from 'axios';
+import React from "react";
+import "./Sidebar.scss";
 
+import axios from "axios";
 
 class Sidebar extends React.Component {
-
   state = {
-    dataFromApi: []
-  }
-  
+    dataFromApi: [],
+  };
 
   componentDidMount() {
-    const API = "https://nodejs-mysql-it-academy.herokuapp.com/hotels/recommended";
+    const API =
+      "https://nodejs-mysql-it-academy.herokuapp.com/hotels/recommended";
     axios.get(API).then((res) => {
       this.setState({
         dataFromApi: res.data,
@@ -20,9 +18,7 @@ class Sidebar extends React.Component {
     });
   }
 
-
   render() {
-    
     return (
       <div className="sidebar">
         <div className="sidebar-block sidebar-hotels">
@@ -31,7 +27,7 @@ class Sidebar extends React.Component {
             {this.state.dataFromApi.map((hotel, index) => {
               const { title, image, price, location } = hotel;
               return (
-                <div className="s-hotel" key = {index}>
+                <div className="s-hotel" key={index}>
                   <div
                     className="s-photo"
                     style={{ backgroundImage: `url(${image})` }}
@@ -49,8 +45,6 @@ class Sidebar extends React.Component {
               );
             })}
           </div>
-
-        <AddHotel/>  
         </div>
       </div>
     );

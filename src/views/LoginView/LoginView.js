@@ -22,7 +22,7 @@ class LoginView extends React.Component {
 
         axios.post(url + 'login' , form , options)
         .then(response =>{
-            localStorage.setItem('token', response.data.accesToken)
+            localStorage.setItem('token', response.data.accessToken)
             this.props.history.push('/');  // jezeli login success, token bedzie zapisany do localstorage
         }) 
         .catch(error =>{

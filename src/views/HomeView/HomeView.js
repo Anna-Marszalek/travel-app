@@ -8,7 +8,7 @@ class HomeView extends React.Component {
   state = {
     hotels: [],
     sort: true,
-    dataFromApi: null,
+    dataFromApi: [],
     currency: "USD",
     currencyIcon: "$",
   };

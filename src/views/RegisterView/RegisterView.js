@@ -41,6 +41,8 @@ class RegisterView extends React.Component {
                     <input type = "email" name = "email" required></input>
                     <label>Password:</label>
                     <input type="password" name = "password" required></input>
+                    <label>Repeat Password:</label>
+                    <input type="password" name = "repeatPassword" required></input>
                     <input type = "submit" value = "Register"></input>
                 </form>
             </div>
