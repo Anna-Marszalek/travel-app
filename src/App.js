@@ -7,6 +7,7 @@ import LoginView from "./views/LoginView/LoginView";
 import RegisterView from "./views/RegisterView/RegisterView";
 import AddHotelView from "./views/AddHotelView/AddHotelView";
 import ContactUsView from "./views/ContactUsView/ContactUsView";
+import UserHotelsView from "./views/UserHotelsView/UserHotelsView";
 import TopBar from "./components/TopBar/TopBar";
 import axios from "axios";
 import { url } from "./utils/api";
@@ -20,21 +21,22 @@ class App extends React.Component {
   };
 
   verifyUserStatus = () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
     const options = {
       headers: {
-        "x-access-token": token,
+        'x-access-token': token,
       },
     };
+
     if (token && token.length > 0) {
       axios
         .get(`${url}/users/me`, options)
         .then((response) => {
           this.setState({
             user: response.data,
-            isAuthorized: true,
-          });
+            isAuthorized: true
+          })
         })
         .catch((error) => {
           console.log(error);
@@ -42,8 +44,8 @@ class App extends React.Component {
     } else {
       this.setState({
         user: null,
-        isAuthorized: false,
-      });
+        isAuthorized: false
+      })
     }
   };
 
@@ -71,6 +73,11 @@ class App extends React.Component {
             <PrivateRoute 
             path="/add-hotel" 
             component={AddHotelView} 
+            isAuthorized={this.state.isAuthorized}
+            />
+            <PrivateRoute 
+            path="/my-hotels" 
+            component={UserHotelsView} 
             isAuthorized={this.state.isAuthorized}
             />
             <Route path="/" component={HomeView} />

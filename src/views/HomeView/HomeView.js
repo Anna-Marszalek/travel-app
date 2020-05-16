@@ -1,8 +1,9 @@
 import React from "react";
 import MainContainer from "../../components/MainContainer/MainContainer";
 import Header from "../../components/Header/Header";
-import axios from "axios";
 import rates from "../../utils/rates";
+import { connect } from "react-redux";
+import { getHotels } from "../../store/actions/hotels-actions";
 
 class HomeView extends React.Component {
   state = {
@@ -19,17 +20,17 @@ class HomeView extends React.Component {
     });
 
     this.setState({
-      hotels: name.length > 0 ? filteredHotels : this.state.dataFromApi,
+      hotels: name.length > 0 ? filteredHotels : this.props.hotels,
     });
   };
 
   filterHotelsPrice = (price) => {
-    const filteredHotels = this.state.dataFromApi.filter((hotel) => {
+    const filteredHotels = this.props.hotels.filter((hotel) => {
       return hotel.price >= parseInt(price);
     });
 
     this.setState({
-      hotels: parseInt(price) > 0 ? filteredHotels : this.state.dataFromApi,
+      hotels: parseInt(price) > 0 ? filteredHotels : this.props.hotels,
     });
   };
 
@@ -37,7 +38,6 @@ class HomeView extends React.Component {
     let aMoreB;
     let bMoreA;
 
-    console.log("App -> sortHotels -> this.state.sort", this.state.sort);
     if (this.state.sort) {
       aMoreB = 1;
       bMoreA = -1;
@@ -46,7 +46,7 @@ class HomeView extends React.Component {
       bMoreA = 1;
     }
 
-    return this.state.dataFromApi.sort((a, b) => {
+    return this.props.hotels.sort((a, b) => {
       if (a.title > b.title) {
         return aMoreB;
       } else if (b.title > a.title) {
@@ -84,16 +84,10 @@ class HomeView extends React.Component {
       });
     }
   }
-
   componentDidMount() {
-    axios
-      .get("https://nodejs-mysql-it-academy.herokuapp.com/hotels")
-      .then((res) => {
-        this.setState({
-          dataFromApi: res.data,
-        });
-        this.switchSort();
-      });
+    if (!this.props.hotels.length) {
+      this.props.getHotels();
+    }
   }
 
   render() {
@@ -104,7 +98,7 @@ class HomeView extends React.Component {
           filterHotelsPrice={this.filterHotelsPrice}
         />
         <MainContainer
-          data={this.state.hotels}
+          data={this.props.hotels}
           switchSort={this.switchSort}
           sort={this.state.sort}
           convertPrice={this.convertPrice}
@@ -116,4 +110,12 @@ class HomeView extends React.Component {
   }
 }
 
-export default HomeView;
+const mapStateToProps = (state) => ({
+  hotels: state.hotels,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getHotels: () => dispatch(getHotels()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeView);

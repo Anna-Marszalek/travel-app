@@ -1,11 +1,10 @@
 import React from "react";
-import "./MainContainer.scss";
+import "./Hotel.scss";
 import Sidebar from "../Sidebar/Sidebar";
 import { Link } from "react-router-dom";
-import Hotel from '../Hotel/Hotel';
+import LikeButton from '../LikeButton/LikeButton';
 
-const MainContainer = (props) => {
-  
+const Hotel = (props) => {
   return (
     <div>
       <div className="currency">
@@ -26,25 +25,30 @@ const MainContainer = (props) => {
               value={props.sort ? "A-Z" : "Z-A"}
               onClick={props.switchSort}
             />
-
-
-{props.data.lenhth > 0 ? (
-            props.data.map((hotel, index) => {
-              return <Hotel data ={hotel} key={index} />
-            })
-          ) : (
-
-            <div></div>
-          )}
           </div>
 
-         
-
-         
+          {props.data.map((hotel) => {
+            const currencySign = JSON.parse(JSON.stringify(props.currency));
+            return (
+              <div className="hotel" key={hotel.id}>
+                <img src={hotel.image} alt={hotel.title} />
+                <div className="hotel__info">
+                  <Link to={"hotel/" + hotel.id}>
+                    <span className="hotel-name">{hotel.title}</span>
+                  </Link>
+                  <p>{hotel.location}</p>
+                  <span className="s-price">
+                    {hotel.price} {currencySign}
+                  {/* <LikeButton hotel={{}}/> */}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
   );
 };
 
-export default MainContainer;
+export default Hotel;

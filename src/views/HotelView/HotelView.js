@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { connect } from 'react-redux';
 
 class HotelView extends React.Component {
   state = {
@@ -24,6 +25,7 @@ class HotelView extends React.Component {
     const { title, price, description, wifi } = this.state.hotel;
     return (
       <div>
+      {this.props.savedText}
         <ul>
           <li>{title}</li>
           <li>{price}</li>
@@ -35,4 +37,10 @@ class HotelView extends React.Component {
   }
 }
 
-export default HotelView;
+const mapStateToProps =(state) =>{
+  return {
+    savedText: state.text,
+  }
+}
+
+export default connect(mapStateToProps)(HotelView);
