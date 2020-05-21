@@ -2,10 +2,9 @@ import React from "react";
 import "./MainContainer.scss";
 import Sidebar from "../Sidebar/Sidebar";
 import { Link } from "react-router-dom";
-import Hotel from '../Hotel/Hotel';
+import Hotel from "../Hotel/Hotel";
 
 const MainContainer = (props) => {
-  
   return (
     <div>
       <div className="currency">
@@ -26,21 +25,14 @@ const MainContainer = (props) => {
               value={props.sort ? "A-Z" : "Z-A"}
               onClick={props.switchSort}
             />
-
-
-{props.data.lenhth > 0 ? (
+          </div>
+          {props.data.length > 0 ? (
             props.data.map((hotel, index) => {
-              return <Hotel data ={hotel} key={index} />
+              return <Hotel data={hotel} key={index} />;
             })
           ) : (
-
             <div></div>
           )}
-          </div>
-
-         
-
-         
         </div>
       </div>
     </div>

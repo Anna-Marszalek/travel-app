@@ -1,17 +1,14 @@
-import React from "react";
-import MainContainer from "../../components/MainContainer/MainContainer";
-import Header from "../../components/Header/Header";
-import rates from "../../utils/rates";
-import { connect } from "react-redux";
-import { getHotels } from "../../store/actions/hotels-actions";
+import React from 'react';
+import MainContainer from '../../components/MainContainer/MainContainer';
+import Header from '../../components/Header/Header';
+import { connect } from 'react-redux';
+import { getHotels } from '../../store/actions/hotels-actions';
 
 class HomeView extends React.Component {
   state = {
     hotels: [],
     sort: true,
     dataFromApi: [],
-    currency: "USD",
-    currencyIcon: "$",
   };
 
   filterHotels = (name) => {
@@ -21,16 +18,6 @@ class HomeView extends React.Component {
 
     this.setState({
       hotels: name.length > 0 ? filteredHotels : this.props.hotels,
-    });
-  };
-
-  filterHotelsPrice = (price) => {
-    const filteredHotels = this.props.hotels.filter((hotel) => {
-      return hotel.price >= parseInt(price);
-    });
-
-    this.setState({
-      hotels: parseInt(price) > 0 ? filteredHotels : this.props.hotels,
     });
   };
 
@@ -46,6 +33,7 @@ class HomeView extends React.Component {
       bMoreA = 1;
     }
 
+    
     return this.props.hotels.sort((a, b) => {
       if (a.title > b.title) {
         return aMoreB;
@@ -57,6 +45,16 @@ class HomeView extends React.Component {
     });
   };
 
+  filterHotelsPrice = (price) => {
+    const filteredHotels = this.props.hotels.filter((hotel) => {
+      return hotel.price >= parseInt(price);
+    });
+
+    this.setState({
+      hotels: price.length > 0 ? filteredHotels : this.props.hotels,
+    });
+  };
+
   switchSort = () => {
     this.setState({
       sort: !this.state.sort,
@@ -64,29 +62,9 @@ class HomeView extends React.Component {
     });
   };
 
-  convertPrice = (e) => {
-    this.setState({
-      currency: e.target.value,
-    });
-  };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.currency !== this.state.currency) {
-      const dataCopy = JSON.parse(JSON.stringify(this.state.dataFromApi));
-
-      const hotelsNew = dataCopy.map((hotel) => {
-        hotel.price = Math.ceil(hotel.price * rates[this.state.currency]);
-        return hotel;
-      });
-
-      this.setState({
-        hotels: hotelsNew,
-      });
-    }
-  }
   componentDidMount() {
     if (!this.props.hotels.length) {
-      this.props.getHotels();
+      this.props.getHotels()
     }
   }
 
@@ -101,9 +79,6 @@ class HomeView extends React.Component {
           data={this.props.hotels}
           switchSort={this.switchSort}
           sort={this.state.sort}
-          convertPrice={this.convertPrice}
-          currency={this.state.currency}
-          currencyIcon={this.setCurrencyIcon}
         />
       </div>
     );
@@ -111,11 +86,11 @@ class HomeView extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  hotels: state.hotels,
-});
+  hotels: state.hotels
+})
 
 const mapDispatchToProps = (dispatch) => ({
-  getHotels: () => dispatch(getHotels()),
-});
+  getHotels: () => dispatch(getHotels())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeView);

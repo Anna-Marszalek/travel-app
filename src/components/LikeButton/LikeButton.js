@@ -22,7 +22,7 @@ class LikeButton extends React.Component {
   render() {
     const { hotel } = this.props;
     return (
-      <div className="fav-button" onclick={this.handleClick}>
+      <div className="fav-button" onClick={this.handleClick}>
         <img className="fav-icon" src={this.isFav(hotel.id) ? heartFilled : heartEmpty} alt="" />
       </div>
     );
