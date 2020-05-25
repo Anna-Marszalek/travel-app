@@ -12,6 +12,7 @@ import TopBar from "./components/TopBar/TopBar";
 import axios from "axios";
 import { url } from "./utils/api";
 import PrivateRoute from "./PrivateRoute";
+import FavouriteView from "./views/FavouriteView/FavouriteView";
 
 class App extends React.Component {
   state = {
@@ -75,6 +76,7 @@ class App extends React.Component {
               component={UserHotelsView}
               isAuthorized={this.state.isAuthorized}
             />
+            <Route path="/favourite" component={FavouriteView} />
             <Route path="/" component={HomeView} />
           </Switch>
         </Router>

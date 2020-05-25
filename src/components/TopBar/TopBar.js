@@ -28,6 +28,10 @@ class TopBar extends React.Component {
           </ul>
         </div>
 
+        <Link to="/favourite" className="favourite">
+          Favourite
+        </Link>
+
         <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
@@ -48,6 +52,9 @@ class TopBar extends React.Component {
                 <div>
                   <Link className="navbar-brand" to="/add-hotel">
                     Add hotels
+                  </Link>
+                  <Link className="navbar-brand" to="/my-hotels">
+                    My hotels
                   </Link>
                   <input
                     type="button"

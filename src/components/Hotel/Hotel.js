@@ -1,30 +1,20 @@
 import React from "react";
 import "./Hotel.scss";
-import Sidebar from "../Sidebar/Sidebar";
 import { Link } from "react-router-dom";
-import LikeButton from "../LikeButton/LikeButton";
+import LikeButton from '../LikeButton/LikeButton';
 
-const Hotel = (props) => {
+const Hotel = ({data}) => {
   return (
-    <div className="main-container">
-      {props.data.map((hotel) => {
-        const currencySign = JSON.parse(JSON.stringify(props.currency));
-        return (
-          <div className="hotel" key={hotel.id}>
-            <img src={hotel.image} alt={hotel.title} />
-            <div className="hotel__info">
-              <Link to={"hotel/" + hotel.id}>
-                <span className="hotel-name">{hotel.title}</span>
-              </Link>
-              <p>{hotel.location}</p>
-              <span className="s-price">
-                {hotel.price} {currencySign}
-                {/* <LikeButton hotel={{}}/> */}
-              </span>
-            </div>
-          </div>
-        );
-      })}
+    <div className="hotel" key={data.id}>
+      <img src={data.image} alt={data.title} />
+      <div className="hotel_info">
+        <Link to={"hotel/" + data.id}>
+          <span className="hotel-name">{data.title}</span>
+        </Link>
+      </div>
+      <span className="hotel-price">{data.price}</span>
+      <p>{data.location}</p>
+      <LikeButton hotel={data} />
     </div>
   );
 };

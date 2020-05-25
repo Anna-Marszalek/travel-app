@@ -35,8 +35,15 @@ export const getHotels = () => {
 };
 
 export const addToFavourites = (hotel) => {
-  return{
-    type: 'ADD_TO_FAVOURITES',
-    payload: hotel
-  }
-}
+  return {
+    type: "ADD_TO_FAVOURITES",
+    payload: hotel,
+  };
+};
+
+export const removeFromFavourites = (hotelId) => {
+  return {
+    type: "REMOVE_FROM_FAVOURITES",
+    payload: hotelId,
+  };
+};
