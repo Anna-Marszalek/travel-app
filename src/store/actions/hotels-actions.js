@@ -1,4 +1,5 @@
 import axios from "axios";
+import { url, options } from '../../utils/api';
 
 export const saveText = (text) => {
   return {
@@ -19,7 +20,7 @@ export const getHotels = () => {
     dispatch({ type: "GET_HOTELS" });
 
     axios
-      .get("https://nodejs-mysql-it-academy.herokuapp.com/hotels")
+      .get(`${url}/hotels`)
       .then((res) => {
         dispatch({
           type: "GET_HOTELS_SUCCESS",
@@ -45,5 +46,23 @@ export const removeFromFavourites = (hotelId) => {
   return {
     type: "REMOVE_FROM_FAVOURITES",
     payload: hotelId,
+  };
+};
+
+export const getUserHotels = () => {
+  return (dispatch) => {
+    dispatch({ type: 'GET_USER_HOTELS'});
+
+    axios.get(`${url}/my-hotels`, options)
+    .then((res) => {
+      dispatch({
+        type: 'GET_USER_HOTEL_SUCCESS',
+        payload: res.data,
+      });
+    }).catch(() => {
+      dispatch({
+        type: 'GET_USER_HOTEL_ERROR',
+      });
+    });
   };
 };

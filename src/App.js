@@ -13,6 +13,7 @@ import axios from "axios";
 import { url } from "./utils/api";
 import PrivateRoute from "./PrivateRoute";
 import FavouriteView from "./views/FavouriteView/FavouriteView";
+import Notification from "./components/Notification/Notification";
 
 class App extends React.Component {
   state = {
@@ -56,6 +57,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Router>
+          <Notification />
           <TopBar
             isAuthorized={this.state.isAuthorized}
             user={this.state.user}

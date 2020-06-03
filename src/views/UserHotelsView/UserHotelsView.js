@@ -1,42 +1,44 @@
-import React from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import Hotel from "../../components/Hotel/Hotel";
 import { withRouter } from "react-router-dom";
-import { url } from "../../utils/api";
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserHotels } from '../../store/actions/hotels-actions';
 
-class UserHotelsView extends React.Component {
-  state = {
-    hotels: [],
-  };
+const UserHotelsView = () => {
+  // componentDidMount() {
+  //   // const options = {
+  //   //   headers: {
+  //   //     "x-access-token": localStorage.getItem("token"),
+  //   //   },
+  //   // };
 
-  componentDidMount() {
-    const options = {
-      headers: {
-        "x-access-token": localStorage.getItem("token"),
-      },
-    };
+  //   // axios.get(`${url}/my-hotels`, options).then((res) => {
+  //   //   this.setState({
+  //   //     hotels: res.data,
+  //   //   });
+  //   // }); -- > ZASTĄPIONE w hotel actions, komponent z klasowego zamieniony na funkcyjny
+  // }
 
-    axios.get(`${url}/my-hotels`, options).then((res) => {
-      this.setState({
-        hotels: res.data,
-      });
-    });
-  }
+  const hotels = useSelector((state) => state.userHotels);
+  const dispatch = useDispatch();
 
-  render() {
-    return (
-      <div className="hotels-container">
-        <div className="hotels">
-          {this.state.hotels.length ? (
-            this.state.hotels.map((hotel) => <Hotel data={hotel} />)
-          ) : (
-            <div></div>
-          )}
-          ;
-        </div>
+  useEffect(() => {
+    dispatch(getUserHotels());
+  }, [] );
+  
+
+  return (
+    <div className="hotels-container">
+      <div className="hotels">
+        {hotels.length ? (
+          this.state.hotels.map((hotel) => <Hotel data={hotel} />)
+        ) : (
+          <div></div>
+        )}
+        
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default withRouter(UserHotelsView);

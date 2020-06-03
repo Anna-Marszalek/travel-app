@@ -6,6 +6,7 @@ import { saveText } from '../../store/actions/hotels-actions';
 
 class Header extends React.Component {
   state = {};
+  inputRef = React.createRef();
 
   handleSearch = (event) => {
     this.props.filterHotels(event.target.value);
@@ -17,6 +18,10 @@ class Header extends React.Component {
 
   handleClick = () => {
     this.props.dispatch(saveText('New text is here'));
+  }
+
+  componentDidMount() {
+    this.inputRef.current.focus();
   }
 
   render() {
@@ -31,6 +36,7 @@ class Header extends React.Component {
             className="search-field"
             placeholder="Enter location"
             onChange={this.handleSearch}
+            ref={this.inputRef}
           />
         <hr style={{width:'60%'}}></hr>
         </span>
