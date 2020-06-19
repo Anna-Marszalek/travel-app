@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { addToFavourites } from '../../store/actions/hotels-actions';
 import "./LikeButton.scss";
 
-class LikeButton extends React.Component {
+export class LikeButton extends React.Component {
   handleClick = () => {
     const {hotel, addToFavourites} =this.props;
 
